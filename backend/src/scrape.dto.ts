@@ -1,6 +1,6 @@
 import { IsNotEmpty, IsString } from 'class-validator';
 
-export class ScrapeCourseDto {
+export class ScrapeDto {
   @IsString()
   @IsNotEmpty()
   name: string;
