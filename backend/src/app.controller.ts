@@ -8,7 +8,7 @@ export class AppController {
 
   @Post('/course')
   scrapeInputCourse(@Body() body: ScrapeCourseDto) {
-    console.log('body', body);
+    this.appService.scrapeCourserCourse(body.name);
     return {
       msg: 'Scrape Successfull',
     };
