@@ -2,15 +2,15 @@ import { useState } from 'react';
 import './App.css';
 
 function App() {
-  const [courseSearchKeyWord, setCourseSearchKeyword] = useState('');
+  const [searchKeyword, setSearchKeyword] = useState('');
   const [error, setError] = useState<null | string>(null);
   const [message, setMessage] = useState<null | string>(null);
 
-  const handleCourseSearch = async () => {
-    const body = JSON.stringify({ name: courseSearchKeyWord });
+  const handleProductSearch = async () => {
+    const body = JSON.stringify({ name: searchKeyword });
 
     try {
-      const response = await fetch('http://localhost:3000/scrape/course', {
+      const response = await fetch('http://localhost:3000/scrape/ebay', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -27,13 +27,13 @@ function App() {
   return (
     <div className="App">
       <input
-        value={courseSearchKeyWord}
-        onChange={(e) => setCourseSearchKeyword(e.target.value)}
-        placeholder="Enter Course Name"
+        value={searchKeyword}
+        onChange={(e) => setSearchKeyword(e.target.value)}
+        placeholder="Enter Product Name"
       />
       <br />
       <br />
-      <button onClick={handleCourseSearch}>Search</button>
+      <button onClick={handleProductSearch}>Search</button>
       {error && <p style={{ color: 'green' }}>{error}</p>}
       {message && <p style={{ color: 'red' }}>{message}</p>}
     </div>
