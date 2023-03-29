@@ -1,10 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import axios from 'axios';
 import * as cheerio from 'cheerio';
+import { AppGateway } from './app.gateway';
 
 @Injectable()
 export class AppService {
+  constructor(private appGateway: AppGateway) {}
+
   async scrapeEbayProduct(name: string): Promise<any> {
+    this.appGateway.handleScrapingStarted(null, true);
     const response = await axios.get(
       `https://www.ebay.com/sch/i.html?_from=R40&_trksid=p2380057.m570.l1313&_nkw=${name}e&_sacat=0`,
     );
@@ -19,7 +23,7 @@ export class AppService {
     const numberOfSearchResults = await $(
       '.srp-controls__count-heading span',
     ).text();
-    console.log('NOSR', numberOfSearchResults);
+    this.appGateway.handleNumberOfResults(null, numberOfSearchResults);
 
     //get all items on the page
     const allItemsOnPage = $('.s-item');
@@ -29,8 +33,7 @@ export class AppService {
       const price = $(element).find('.s-item__price').text();
 
       //NOTIFY 3: each product
-      console.log('NAME', name);
-      console.log('PRICE', price);
+      this.appGateway.handleNewProduct(null, { name, price });
     });
   }
 }
