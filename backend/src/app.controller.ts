@@ -6,9 +6,9 @@ import { ScrapeCourseDto } from './scrape.dto';
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
-  @Post('/course')
+  @Post('/ebay')
   scrapeInputCourse(@Body() body: ScrapeCourseDto) {
-    this.appService.scrapeCourserCourse(body.name);
+    this.appService.scrapeEbayCourse(body.name);
     return {
       msg: 'Scrape Successfull',
     };
